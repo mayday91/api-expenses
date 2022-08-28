@@ -38,7 +38,7 @@ router.delete('/notes/:expenseId/:noteId', requireToken, (req, res) => {
   const expenseId = req.params.expenseId
   const noteId = req.params.noteId
 
-  Expense.findById(reviewId)
+  Expense.findById(expenseId)
   .then(expense => {
       const note = expense.notes.id(noteId)
       requireOwnership(req, note)
