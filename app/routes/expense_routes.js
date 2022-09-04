@@ -53,11 +53,11 @@ router.get('/expenses/:id', (req, res, next) => {
 			// Error: Mongoose does not support calling populate() on nested docs. Instead of `doc.arr[0].populate("path")`, use `doc.populate("arr.0.path")`
 			const myExpense = expense
 			console.log('myExpense before populate', myExpense)
-			// myexpense.comments.forEach((comment, commentIndex) => 
+			// myexpense.notes.forEach((comment, commentIndex) => 
 			// myexpense.populate())
 			Expense.populate(myExpense.notes, {'path': 'owner'})
 			console.log('myExpense after populate', myExpense)
-			console.log('andrew tryin to see if we populated, will return boolean', myExpense.populated('notes[0].owner'))
+			console.log('andrew tryin to see if we populated, will return boolean', myExpense.populated('notes[0].user'))
 			console.log(myExpense.notes[0])
 			return myExpense
 		})
@@ -67,11 +67,13 @@ router.get('/expenses/:id', (req, res, next) => {
 
 // CREATE - POST /expenses
 router.post('/expenses', requireToken, (req, res, next) => {
-	req.body.expense.owner = req.user.id
+	req.body.expense.owner = req.user._id
 	const expense = req.body.expense
 	expense.userName = req.user.email
+  console.log('expense in create expense', expense)
 	Expense.create(req.body.expense)
 		.then((expense) => {
+      console.log('expense created', expense)
 			res.status(201).json({ expense: expense.toObject() })
 		})
 		.catch(next)
