@@ -36,5 +36,5 @@
 
 ## ERD
 
-![ERD](ERD1.JPG)
+![ERD](ERD1.jpg)
  
