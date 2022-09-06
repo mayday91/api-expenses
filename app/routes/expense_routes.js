@@ -52,9 +52,9 @@ router.get('/expenses/:id', (req, res, next) => {
 
 			console.log('myExpense after populate', myExpense)
 
-			console.log('Trying to see if we populated, will return boolean if so', myExpense.populated('notes[0].userName'))
+			console.log('Trying to see if we populated, will return boolean if so', myExpense.populated('notes[0].owner'))
 
-			console.log('notes[0] inside of myExpense in show expenses', myExpense.notes[0])
+			console.log('notes inside of myExpense in show expenses', myExpense.notes)
 
 			return myExpense
 		})
