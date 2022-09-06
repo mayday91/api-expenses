@@ -45,7 +45,20 @@ app.use(
 
 // define port for API to run on
 // adding PORT= to your env file will be necessary for deployment
-const port = process.env.PORT || serverDevPort
+const port = process.env.PORT || serverDevPort || 5000
+
+// for Heroku deployment
+if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV ===' staging') {
+	app.use(express.static('client/build'));
+	app.get('*', (req, res) => {
+	res.sendFile(path.join(__dirname + '/client/build/index.html'));
+	});
+ }
+
+ const path = require("path");
+
+
+
 
 // this middleware makes it so the client can use the Rails convention
 // of `Authorization: Token token=<token>` OR the Express convention of
@@ -66,9 +79,9 @@ app.use(express.urlencoded({ extended: true }))
 app.use(requestLogger)
 
 // register route files
-app.use(expenseRoutes)
-app.use(noteRoutes)
-app.use(userRoutes)
+app.use('/api/expenses',expenseRoutes)
+app.use('/api/notes',noteRoutes)
+app.use('/api/users',userRoutes)
 
 // register error handling middleware
 // note that this comes after the route middlewares, because it needs to be
