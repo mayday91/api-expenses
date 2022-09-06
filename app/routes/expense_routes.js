@@ -2,27 +2,18 @@
 const express = require('express')
 // Passport docs: http://www.passportjs.org/docs/
 const passport = require('passport')
-
 // dotenv
-// require("dotenv").config()
-
+require("dotenv").config()
 // pull in Mongoose model for expenses
 const Expense = require('../models/expense')
-
-
 // require axios
 const axios = require("axios")
-
-// this is a collection of methods that help us detect situations when we need
-// to throw a custom error
+// this is a collection of methods that help us detect situations when we need to throw a custom error
 const customErrors = require('../../lib/custom_errors')
-
-// we'll use this function to send 404 when non-existant document is requested
+// this function sends 404 when nonexistent document is requested
 const handle404 = customErrors.handle404
-// we'll use this function to send 401 when a user tries to modify a resource
-// that's owned by someone else
+// this function sends 401 when user tries to modify a resource owned by someone else
 const requireOwnership = customErrors.requireOwnership
-
 // this is middleware that will remove blank fields from `req.body`, e.g.
 // { example: { title: '', text: 'foo' } } -> { example: { text: 'foo' } }
 const removeBlanks = require('../../lib/remove_blank_fields')
@@ -31,7 +22,7 @@ const removeBlanks = require('../../lib/remove_blank_fields')
 // it will also set `req.user`
 const requireToken = passport.authenticate('bearer', { session: false })
 
-// instantiate a router (mini app that only handles routes)
+// instantiate a router
 const router = express.Router()
 
 
@@ -52,13 +43,19 @@ router.get('/expenses/:id', (req, res, next) => {
 		.then((expense) => {
 			// Error: Mongoose does not support calling populate() on nested docs. Instead of `doc.arr[0].populate("path")`, use `doc.populate("arr.0.path")`
 			const myExpense = expense
+
 			console.log('myExpense before populate', myExpense)
+
 			// myexpense.notes.forEach((comment, commentIndex) => 
 			// myexpense.populate())
 			Expense.populate(myExpense.notes, {'path': 'owner'})
+
 			console.log('myExpense after populate', myExpense)
-			console.log('andrew tryin to see if we populated, will return boolean', myExpense.populated('notes[0].user'))
-			console.log(myExpense.notes[0])
+
+			console.log('Trying to see if we populated, will return boolean if so', myExpense.populated('notes[0].userName'))
+
+			console.log('notes[0] inside of myExpense in show expenses', myExpense.notes[0])
+
 			return myExpense
 		})
 		.then((expense) => res.status(200).json({ expense: expense.toObject() }))
