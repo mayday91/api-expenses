@@ -24,7 +24,7 @@
 | DELETE | `/sign-out/`           | `users#signout`   |
 
 
-## PLAYLIST ROUTES
+## EXPENSE ROUTES
 
 | Verb    | URI Pattern           | Controller#Action      |
 |---------|-----------------------|------------------------|
