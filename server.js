@@ -48,14 +48,14 @@ app.use(
 const port = process.env.PORT || serverDevPort || 5000
 
 // for Heroku deployment
-if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV ===' staging') {
-	app.use(express.static('client/build'));
-	app.get('*', (req, res) => {
-	res.sendFile(path.join(__dirname + '/client/build/index.html'));
-	});
- }
+// if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV ===' staging') {
+// 	app.use(express.static('client/build'));
+// 	app.get('*', (req, res) => {
+// 	res.sendFile(path.join(__dirname + '/client/build/index.html'));
+// 	});
+//  }
 
- const path = require("path");
+//  const path = require("path");
 
 
 
@@ -79,9 +79,9 @@ app.use(express.urlencoded({ extended: true }))
 app.use(requestLogger)
 
 // register route files
-app.use('/api/expenses',expenseRoutes)
-app.use('/api/notes',noteRoutes)
-app.use('/api/users',userRoutes)
+app.use(expenseRoutes)
+app.use(noteRoutes)
+app.use(userRoutes)
 
 // register error handling middleware
 // note that this comes after the route middlewares, because it needs to be
