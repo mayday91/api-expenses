@@ -1,4 +1,4 @@
-# fly.toml file generated for expenses on 2022-09-07T12:17:00-04:00
+# fly.toml file generated for expenses on 2022-09-09T17:12:09-04:00
 
 app = "expenses"
 kill_signal = "SIGINT"
@@ -10,8 +10,6 @@ processes = []
 
 [env]
   PORT = "8080"
-  MONGODB_URI = "mongodb+srv://mayday:DJoseph1352@expense.jehvwtf.mongodb.net/eXpenses?retryWrites=true&w=majority"
-  CLIENT_ORIGIN = "https://mayday-expenses.netlify.app"
 
 [experimental]
   allowed_public_ports = []
