@@ -48,7 +48,7 @@ app.use(
 const port = process.env.PORT || serverDevPort || 5000
 
 // for Heroku deployment
-if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV ===' staging') {
+if (process.env.PORT === 'production' || process.env.PORT ===' staging') {
 	app.use(express.static('client/build'));
 	app.get('*', (req, res) => {
 	res.sendFile(path.join(__dirname + '/client/build/index.html'));
@@ -79,7 +79,7 @@ app.use(express.urlencoded({ extended: true }))
 app.use(requestLogger)
 
 // register route files
-app.use(expenseRoutes)
+app.use('/', expenseRoutes)
 app.use(noteRoutes)
 app.use(userRoutes)
 
