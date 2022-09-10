@@ -27,7 +27,7 @@ const router = express.Router()
 
 
 // INDEX - GET /expenses
-router.get('/expenses', (req, res, next) => {
+router.get('/', (req, res, next) => {
 	Expense.find()
 		.then((expenses) => {
 			return expenses.map((expense) => expense.toObject())
