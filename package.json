@@ -7,7 +7,7 @@
   "description": "API Server for Expenses App",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon node server.js backend",
+    "start": "nodemon server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "heroku-postbuild": "npm install && npm run build",
     "build": "webpack"
