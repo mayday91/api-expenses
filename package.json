@@ -9,6 +9,7 @@
   "scripts": {
     "start": "nodemon server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "npm run build",
     "heroku-postbuild": "npm install && npm run build"
   },
   "author": "Ryan May",
