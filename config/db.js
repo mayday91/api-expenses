@@ -6,8 +6,8 @@ const mongooseBaseName = 'ExpensesAPI'
 
 // create the mongodb uri for development and test
 const database = {
-	development: `mongodb://0.0.0.0/${mongooseBaseName}-development`,
-	test: `mongodb://0.0.0.0/${mongooseBaseName}-test`,
+	development: `mongodb://127.0.0.1/${mongooseBaseName}-development`,
+	test: `mongodb://127.0.0.1/${mongooseBaseName}-test`,
 }
 
 // Identify if development environment is test or development
