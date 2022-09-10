@@ -15,7 +15,7 @@ type: nodejs:16
 # to the application in the PLATFORM_RELATIONSHIPS variable. The right-hand
 # side is in the form `<service name>:<endpoint name>`.
 relationships:
-  database: "db:mongodb:3.6"
+  database: "mongodb:3.6"
 
 # The configuration of app when it is exposed to the web.
 web:
