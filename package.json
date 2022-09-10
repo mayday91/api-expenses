@@ -7,9 +7,10 @@
   "description": "API Server for Expenses App",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon server.js backend",
+    "start": "nodemon node server.js backend",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "heroku-postbuild": "npm install && npm run build"
+    "heroku-postbuild": "npm install && npm run build",
+    "build": "webpack --config webpack.config.js"
   },
   "author": "Ryan May",
   "license": "ISC",
