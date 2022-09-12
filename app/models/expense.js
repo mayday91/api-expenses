@@ -12,9 +12,14 @@ const expenseSchema = new Schema({
       type: Number,
       required: true
   },
+  type: {
+    type: String,
+    enum: ['income', 'expense'],
+    required: true
+  },
   category: {
     type: String,
-    trim: true,
+    enum: ['utilities', 'housing', 'entertainment', 'food', 'travel', 'savings', 'investment', 'loan', 'personal', 'healthcare', 'debt', 'credit', 'tech', 'misc.'],
     required: true
   },
   date: {
