@@ -27,7 +27,7 @@ const router = express.Router()
 
 // SIGN UP
 // POST /sign-up
-router.post('/sign-up', (req, res, next) => {
+router.post('/accounts/sign-up', (req, res, next) => {
 	// start a promise chain, so that any errors will pass to `handle`
 	Promise.resolve(req.body.credentials)
 		// reject any requests where `credentials.password` is not present, or where
@@ -62,12 +62,12 @@ router.post('/sign-up', (req, res, next) => {
 
 // SIGN IN
 // POST /sign-in
-router.post('/sign-in', (req, res, next) => {
+router.post('/accounts/sign-in', async (req, res, next) => {
 	const pw = req.body.credentials.password
 	let user
 
 	// find a user based on the email that was passed
-	User.findOne({ username: req.body.credentials.username })
+	await User.findOne({ username: req.body.credentials.username })
 		.then((record) => {
 			// if we didn't find a user with that email, send 401
 			if (!record) {
@@ -96,13 +96,25 @@ router.post('/sign-in', (req, res, next) => {
 		.then((user) => {
 			// return status 201, the email, and the new token
 			res.status(201).json({ user: user.toObject() })
+		
+			if (user.length !== 0) {
+				//console.log(profile)
+				console.log("username", username)
+				
+				console.log('profile exist', profile)
+				res.redirect('/expenses')
+				//res.redirect('assignments/home')
+			} else { console.log('no profile exist', profile)
+				console.log('profile length', profile.length)
+				res.redirect('/profile/new')
+			}
 		})
 		.catch(next)
 })
 
 // CHANGE password
 // PATCH /change-password
-router.patch('/change-password', requireToken, (req, res, next) => {
+router.patch('/accounts/change-password', requireToken, (req, res, next) => {
 	let user
 	// `req.user` will be determined by decoding the token payload
 	User.findById(req.user.id)
@@ -134,7 +146,42 @@ router.patch('/change-password', requireToken, (req, res, next) => {
 		.catch(next)
 })
 
-router.delete('/sign-out', requireToken, (req, res, next) => {
+
+// CHANGE email
+// PATCH /change-email
+router.patch('/accounts/change-email', requireToken, (req, res, next) => {
+	let user
+	// `req.user` will be determined by decoding the token payload
+	User.findById(req.user.id)
+		// save user outside the promise chain
+		.then((record) => {
+			user = record
+		})
+		// check that the old password is correct
+		.then(() => bcrypt.compare(req.body.email.old, user.email))
+		// `correctPassword` will be true if hashing the old password ends up the
+		// same as `user.hashedPassword`
+		.then((correctEmail) => {
+			// throw an error if the new password is missing, an empty string,
+			// or the old password was wrong
+			if (!req.body.email.new || !correctEmail) {
+				throw new BadParamsError()
+			}
+		})
+		// hash the new password
+		.then(() => bcrypt.hash(req.body.email.new, bcryptSaltRounds))
+		.then((hash) => {
+			// set and save the new hashed password in the DB
+			user.hashedPassword = hash
+			return user.save()
+		})
+		// respond with no content and status 200
+		.then(() => res.sendStatus(204))
+		// pass any errors along to the error handler
+		.catch(next)
+})
+
+router.delete('/accounts/sign-out', requireToken, (req, res, next) => {
 	// create a new random token for the user, invalidating the current one
 	req.user.token = crypto.randomBytes(16)
 	// save the token and respond with 204

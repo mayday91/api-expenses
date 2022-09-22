@@ -19,7 +19,7 @@ const expenseSchema = new Schema({
   },
   category: {
     type: String,
-    enum: ['utilities', 'housing', 'entertainment', 'food', 'travel', 'savings', 'investment', 'loan', 'personal', 'healthcare', 'debt', 'credit', 'tech', 'misc.'],
+    enum: ['utilities', 'housing', 'pet', 'entertainment', 'food', 'travel', 'savings', 'investment', 'loan', 'personal', 'healthcare', 'debt', 'credit', 'tech', 'misc.', 'test', 'clothing', 'kicks'],
     required: true
   },
   date: {

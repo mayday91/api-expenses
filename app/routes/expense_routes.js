@@ -66,7 +66,7 @@ router.get('/expenses/:id', (req, res, next) => {
 router.post('/expenses', requireToken, (req, res, next) => {
 	req.body.expense.owner = req.user._id
 	const expense = req.body.expense
-	expense.userName = req.user.email
+	expense.userName = req.user.username
   console.log('expense in create expense', expense)
 	Expense.create(req.body.expense)
 		.then((expense) => {
