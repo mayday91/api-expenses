@@ -22,7 +22,7 @@ const auth = require('./lib/auth')
 
 // define server and client ports
 // used for cors and local port declaration
-const serverDevPort = 8080
+const serverDevPort = 8000
 const clientDevPort = 3000
 
 // establish database connection
@@ -48,12 +48,12 @@ app.use(
 const port = process.env.PORT || serverDevPort || 5000
 
 // for Heroku deployment
-if (process.env.PORT === 'production' || process.env.PORT ===' staging') {
-	app.use(express.static('client/build'));
-	app.get('*', (req, res) => {
-	res.sendFile(path.join(__dirname + '/client/build/index.html'));
-	});
- }
+// if (process.env.PORT === 'production' || process.env.PORT ===' staging') {
+// 	app.use(express.static('client/build'));
+// 	app.get('*', (req, res) => {
+// 	res.sendFile(path.join(__dirname + '/client/build/index.html'));
+// 	});
+//  }
 
  const path = require("path");
 
@@ -79,7 +79,7 @@ app.use(express.urlencoded({ extended: true }))
 app.use(requestLogger)
 
 // register route files
-app.use('/', expenseRoutes)
+app.use(expenseRoutes)
 app.use(noteRoutes)
 app.use(userRoutes)
 

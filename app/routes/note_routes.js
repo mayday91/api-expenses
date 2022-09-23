@@ -16,9 +16,10 @@ router.post('/notes/:expenseId', requireToken, (req, res, next) => {
     note.owner = req.user.id
     note.userName = req.user.username
     console.log('req.user.username in note create', req.user.username)
+    console.log(note)
     const expenseId = req.params.expenseId
     
-    Expense.findOneAndUpdate(expenseId)
+    Expense.findById(expenseId)
         .then(handle404)
         .then(expense => {
             console.log('this is the expense', expense)
@@ -34,21 +35,30 @@ router.post('/notes/:expenseId', requireToken, (req, res, next) => {
 
 // UPDATE
 // PATCH /notes/:expenseId/:noteId
-// router.patch('/notes/:expenseId/:noteId', requireToken, removeBlanks, (req, res, next) => {
-// 	delete req.body.note.owner
+router.patch('/notes/:expenseId/:noteId', requireToken, removeBlanks, (req, res, next) => {
+	// delete req.body.note.owner
+const noteId = req.params.noteId
+const expenseId = req.params.expenseId
 
-// 	Expense.findById(req.params.id)
-// 		.then(handle404)
-// 		.then((expense) => {
-//             console.log('noteId in update Note', noteId)
-//             const note = expense.notes.id(noteId)
-//             requireOwnership(req, note)
-// 			return expense.updateOne(req.body.expense)
-// 		})
-// 		.then(() => res.sendStatus(204))
-//         .then(() => triggerRefresh())
-// 		.catch(next)
-// })
+	Expense.findById(expenseId)
+		.then(handle404)
+		.then((expense) => {
+
+            console.log('noteId in update Note', noteId)
+
+            const note = expense.notes._id(noteId)
+
+            requireOwnership(req, note)
+
+            note.set(req.body.note)
+
+			return expense.updateOne(req.body.expense)
+            // return expense.save()
+		})
+		.then(() => res.sendStatus(204))
+        .then(() => triggerRefresh())
+		.catch(next)
+})
 
 
 
