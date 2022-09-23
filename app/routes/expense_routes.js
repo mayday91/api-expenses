@@ -46,8 +46,8 @@ router.get('/expenses/:id', (req, res, next) => {
 
 			console.log('myExpense before populate', myExpense)
 
-			myexpense.notes.forEach((comment, commentIndex) => 
-			myExpense.populate())
+			// myexpense.notes.forEach((comment, commentIndex) => 
+			// myExpense.populate())
 			Expense.populate(myExpense.notes, {'path': 'owner'})
 
 			console.log('myExpense after populate', myExpense)
