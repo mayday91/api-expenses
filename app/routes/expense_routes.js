@@ -48,11 +48,12 @@ router.get('/expenses/:id', (req, res, next) => {
 
 			// myexpense.notes.forEach((comment, commentIndex) => 
 			// myExpense.populate())
+			
 			Expense.populate(myExpense.notes, {'path': 'owner'})
 
 			console.log('myExpense after populate', myExpense)
 
-			console.log('Trying to see if we populated, will return boolean if so', myExpense.populated(notes[0].owner))
+			// console.log('Trying to see if we populated, will return boolean if so', myExpense.populated(notes[0].owner))
 
 			console.log('notes inside of myExpense in show expenses', myExpense.notes)
 
