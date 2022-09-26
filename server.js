@@ -53,17 +53,17 @@ if (process.env.PORT === 'production' || process.env.PORT ===' staging') {
 	app.get('*', (req, res) => {
 	res.sendFile(path.join(__dirname + '/client/build/index.html'));
 	});
- }
+}
 
- const path = require("path");
+const path = require("path");
 
 
 
- app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', req.headers.origin);
-  res.header('Access-Control-Allow-Credentials', true);
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-  next();
+app.use((req, res, next) => {
+	res.header('Access-Control-Allow-Origin', req.headers.origin);
+	res.header('Access-Control-Allow-Credentials', true);
+	res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+	next();
 });
 
 
