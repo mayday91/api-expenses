@@ -39,7 +39,7 @@ const app = express()
 // `CLIENT_ORIGIN` is an environment variable that will be set on Heroku
 app.use(
 	cors({
-		origin:"https://pecunia.netlify.app/accounts/sign-in"||`http://localhost:${clientDevPort}`,
+		origin: process.env.CLIENT_ORIGIN ||`http://localhost:${clientDevPort}`,
 	})
 )
 
@@ -48,32 +48,32 @@ app.use(
 const port = process.env.PORT || serverDevPort || 5000
 
 // for Heroku deployment
-if (process.env.PORT === 'production' || process.env.PORT ===' staging') {
-	app.use(express.static('client/build'));
-	app.get('*', (req, res) => {
-	res.sendFile(path.join(__dirname + '/client/build/index.html'));
-	});
-}
+// if (process.env.PORT === 'production' || process.env.PORT ===' staging') {
+// 	app.use(express.static('client/build'));
+// 	app.get('*', (req, res) => {
+// 	res.sendFile(path.join(__dirname + '/client/build/index.html'));
+// 	});
+// }
 
-const path = require("path");
+// const path = require("path");
 
 
 
-app.use((req, res, next) => {
-	res.header('Access-Control-Allow-Origin', req.headers.origin);
-	res.header('Access-Control-Allow-Credentials', true);
-	res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-	next();
-});
+// app.use((req, res, next) => {
+// 	res.header('Access-Control-Allow-Origin', req.headers.origin);
+// 	res.header('Access-Control-Allow-Credentials', true);
+// 	res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+// 	next();
+// });
 
 ////////// CORS ACCESS //////////////////////
 /////////////////////////////////////////////////
-app.all('*', function (req, res, next) {
-	res.header('Access-Control-Allow-Origin', '*');
-	res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
-	res.header('Access-Control-Allow-Headers', 'Content-Type');
-	next();
-});
+// app.all('*', function (req, res, next) {
+// 	res.header('Access-Control-Allow-Origin', '*');
+// 	res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
+// 	res.header('Access-Control-Allow-Headers', 'Content-Type');
+// 	next();
+// });
 ////////////////////////////////////////////////
 
 // this middleware makes it so the client can use the Rails convention
