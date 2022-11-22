@@ -39,7 +39,7 @@ const app = express()
 // `CLIENT_ORIGIN` is an environment variable that will be set on Heroku
 app.use(
 	cors({
-		origin: process.env.CLIENT_ORIGIN ||`http://localhost:${clientDevPort}`,
+		origin: process.env.CLIENT_ORIGIN ||`http://localhost:${clientDevPort}` || `http://127.0.0.1:${clientDevPort}` ||"https://pecunia.netlify.app/" ,
 	})
 )
 
